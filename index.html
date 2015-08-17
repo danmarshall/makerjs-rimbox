@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>stackbox</title>
+	<style>
+		html, body, svg {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+			font-family: sans-serif;
+			line-height: 24px;
+		}
+		svg {
+			width: 100%;
+			position: absolute;
+		}
+		path {
+			stroke: blue;
+		}
+	</style>
+</head>
+<body>
+	<script src="http://microsoft.github.io/maker.js/target/js/browser.maker.js"></script>
+
+	<script>
+		var module = {};
+	</script>
+	<script src="index.js"></script>
+	<script>
+		
+		var makerjs = require('makerjs');
+		
+		var model = new stackbox(100, 50, 3, 2);
+		
+		document.write(makerjs.exporter.toSVG(model));
+		
+	</script>
+</body>
+</html>

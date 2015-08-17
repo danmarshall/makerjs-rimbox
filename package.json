@@ -1,0 +1,27 @@
+{
+  "name": "stackbox",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc --module commonjs index.ts",
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danmarshall/stackbox.git"
+  },
+  "keywords": [
+    "makerjs"
+  ],
+  "author": "Dan Marshall",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/danmarshall/stackbox/issues"
+  },
+  "homepage": "https://github.com/danmarshall/stackbox",
+  "dependencies": {
+    "makerjs": "^0.3.3",
+    "tsd": "^0.6.3"
+  }
+}
