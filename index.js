@@ -2,7 +2,8 @@
 var makerjs = require('makerjs');
 var stackboxCorner = (function () {
     function stackboxCorner(holeRadius, rimThickness) {
-        var hr = holeRadius + rimThickness;
+        var rim = Math.min(rimThickness, holeRadius);
+        var hr = holeRadius + rim;
         this.paths = {
             centerRound: new makerjs.paths.Arc([0, 0], hr, 0, 90),
             hFillet: new makerjs.paths.Arc([0, hr + holeRadius], holeRadius, 180, 270),
@@ -22,7 +23,8 @@ var stackboxInner = (function () {
             topRight: mm.move(mm.mirror(corner, true, true), [width, height])
         };
         var line = makerjs.paths.Line;
-        var d = 2 * holeRadius + rimThickness;
+        var rim = Math.min(rimThickness, holeRadius);
+        var d = 2 * holeRadius + rim;
         this.paths = {
             bottom: new line([d, -holeRadius], [width - d, -holeRadius]),
             top: new line([d, height + holeRadius], [width - d, height + holeRadius]),
@@ -34,6 +36,13 @@ var stackboxInner = (function () {
 })();
 var stackbox = (function () {
     function stackbox(width, height, holeRadius, rimThickness) {
+        if (arguments.length == 0) {
+            var defaultValues = makerjs.kit.getParameterValues(stackbox);
+            width = defaultValues.shift();
+            height = defaultValues.shift();
+            holeRadius = defaultValues.shift();
+            rimThickness = defaultValues.shift();
+        }
         var mm = makerjs.models;
         var cornerRadius = holeRadius + rimThickness;
         var c2 = cornerRadius * 2;
@@ -46,4 +55,10 @@ var stackbox = (function () {
     }
     return stackbox;
 })();
+stackbox.metaParameters = [
+    { title: "width", type: "range", min: 10, max: 500, value: 120 },
+    { title: "height", type: "range", min: 10, max: 500, value: 100 },
+    { title: "holeRadius", type: "range", min: 1, max: 20, value: 3 },
+    { title: "rimThickness", type: "range", min: 1, max: 20, value: 2 }
+];
 module.exports = stackbox;
