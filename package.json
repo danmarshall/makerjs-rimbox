@@ -1,7 +1,7 @@
 {
   "name": "makerjs-rimbox",
   "version": "1.1.1",
-  "description": "",
+  "description": "A parametric round cornered hollow box with bolt holes. For Maker.js",
   "main": "index.js",
   "scripts": {
     "build": "tsc --module commonjs index.ts",
