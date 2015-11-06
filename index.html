@@ -30,8 +30,19 @@
 	<script>
 		
 		var makerjs = require('makerjs');
+		var move = makerjs.model.move;
 		
-		var model = new Rimbox(100, 50, 3, 2);
+		var model = { 
+			models: {
+				"0": move(new makerjs.models.Rectangle(270,170),[-20,-20]),
+				"1": new Rimbox(100, 50, 3, 2),
+				"2": move(new Rimbox(100, 50, 3, 4), [120, 0]),
+				"3": move(new Rimbox(50, 50, 6, 2), [25, 70]),
+				"4": move(new Rimbox(20, 50, 1, 1.5), [110, 70]),
+				"5": move(new Rimbox(20, 50, 2, 2), [150, 70]),
+				"6": move(new Rimbox(20, 50, 2, 2, true), [190, 70]),
+			}
+		};
 		
 		document.write(makerjs.exporter.toSVG(model));
 		
