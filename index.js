@@ -35,7 +35,7 @@ var RimboxInner = (function () {
     return RimboxInner;
 })();
 var Rimbox = (function () {
-    function Rimbox(width, height, holeRadius, rimThickness) {
+    function Rimbox(width, height, holeRadius, rimThickness, hollow) {
         if (arguments.length == 0) {
             var defaultValues = makerjs.kit.getParameterValues(Rimbox);
             width = defaultValues.shift();
@@ -48,9 +48,11 @@ var Rimbox = (function () {
         var c2 = cornerRadius * 2;
         this.models = {
             bolts: new mm.BoltRectangle(width, height, holeRadius),
-            outer: new mm.RoundRectangle(width + c2, height + c2, cornerRadius),
-            inner: new RimboxInner(width, height, holeRadius, rimThickness)
+            outer: new mm.RoundRectangle(width + c2, height + c2, cornerRadius)
         };
+        if (hollow) {
+            this.models['inner'] = new RimboxInner(width, height, holeRadius, rimThickness);
+        }
         this.models['outer'].origin = [-cornerRadius, -cornerRadius];
     }
     return Rimbox;
@@ -59,6 +61,7 @@ Rimbox.metaParameters = [
     { title: "width", type: "range", min: 10, max: 500, value: 120 },
     { title: "height", type: "range", min: 10, max: 500, value: 100 },
     { title: "holeRadius", type: "range", min: 1, max: 20, value: 3 },
-    { title: "rimThickness", type: "range", min: 1, max: 20, value: 2 }
+    { title: "rimThickness", type: "range", min: 1, max: 20, value: 2 },
+    { title: "hollow", type: "bool", value: true }
 ];
 module.exports = Rimbox;

@@ -48,7 +48,7 @@ class RimboxInner implements MakerJs.IModel {
 class Rimbox implements MakerJs.IModel {
 	public models: MakerJs.IModelMap;
 	
-	constructor(width: number, height: number, holeRadius: number, rimThickness: number) {
+	constructor(width: number, height: number, holeRadius: number, rimThickness: number, hollow: boolean) {
 		if (arguments.length == 0) {
 			var defaultValues = makerjs.kit.getParameterValues(Rimbox);
 			width = defaultValues.shift();
@@ -63,9 +63,12 @@ class Rimbox implements MakerJs.IModel {
 	
 		this.models = {
 			bolts: new mm.BoltRectangle(width, height, holeRadius),
-			outer: new mm.RoundRectangle(width + c2, height + c2, cornerRadius),
-			inner: new RimboxInner(width, height, holeRadius, rimThickness)
+			outer: new mm.RoundRectangle(width + c2, height + c2, cornerRadius)
 		};
+		
+		if (hollow) {
+			this.models['inner'] = new RimboxInner(width, height, holeRadius, rimThickness)
+		}
 		
 		this.models['outer'].origin = [-cornerRadius, -cornerRadius];
 	}	
@@ -75,8 +78,8 @@ class Rimbox implements MakerJs.IModel {
     { title: "width", type: "range", min: 10, max: 500, value: 120 },
 	{ title: "height", type: "range", min: 10, max: 500, value: 100 },
 	{ title: "holeRadius", type: "range", min: 1, max: 20, value: 3 },
-	{ title: "rimThickness", type: "range", min: 1, max: 20, value: 2 }
+	{ title: "rimThickness", type: "range", min: 1, max: 20, value: 2 },
+	{ title: "hollow", type: "bool", value: true }
 ];
-
 
 export = Rimbox;
