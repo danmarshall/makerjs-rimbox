@@ -1,7 +1,7 @@
 /// <reference path="typings/tsd.d.ts" />
 var makerjs = require('makerjs');
-var stackboxCorner = (function () {
-    function stackboxCorner(holeRadius, rimThickness) {
+var RimboxCorner = (function () {
+    function RimboxCorner(holeRadius, rimThickness) {
         var rim = Math.min(rimThickness, holeRadius);
         var hr = holeRadius + rim;
         this.paths = {
@@ -10,12 +10,12 @@ var stackboxCorner = (function () {
             wFillet: new makerjs.paths.Arc([hr + holeRadius, 0], holeRadius, 180, 270)
         };
     }
-    return stackboxCorner;
+    return RimboxCorner;
 })();
-var stackboxInner = (function () {
-    function stackboxInner(width, height, holeRadius, rimThickness) {
+var RimboxInner = (function () {
+    function RimboxInner(width, height, holeRadius, rimThickness) {
         var mm = makerjs.model;
-        var corner = new stackboxCorner(holeRadius, rimThickness);
+        var corner = new RimboxCorner(holeRadius, rimThickness);
         this.models = {
             bottomLeft: corner,
             bottomRight: mm.move(mm.mirror(corner, true, false), [width, 0]),
@@ -32,12 +32,12 @@ var stackboxInner = (function () {
             right: new line([width + holeRadius, d], [width + holeRadius, height - d])
         };
     }
-    return stackboxInner;
+    return RimboxInner;
 })();
-var stackbox = (function () {
-    function stackbox(width, height, holeRadius, rimThickness) {
+var Rimbox = (function () {
+    function Rimbox(width, height, holeRadius, rimThickness) {
         if (arguments.length == 0) {
-            var defaultValues = makerjs.kit.getParameterValues(stackbox);
+            var defaultValues = makerjs.kit.getParameterValues(Rimbox);
             width = defaultValues.shift();
             height = defaultValues.shift();
             holeRadius = defaultValues.shift();
@@ -49,16 +49,16 @@ var stackbox = (function () {
         this.models = {
             bolts: new mm.BoltRectangle(width, height, holeRadius),
             outer: new mm.RoundRectangle(width + c2, height + c2, cornerRadius),
-            inner: new stackboxInner(width, height, holeRadius, rimThickness)
+            inner: new RimboxInner(width, height, holeRadius, rimThickness)
         };
         this.models['outer'].origin = [-cornerRadius, -cornerRadius];
     }
-    return stackbox;
+    return Rimbox;
 })();
-stackbox.metaParameters = [
+Rimbox.metaParameters = [
     { title: "width", type: "range", min: 10, max: 500, value: 120 },
     { title: "height", type: "range", min: 10, max: 500, value: 100 },
     { title: "holeRadius", type: "range", min: 1, max: 20, value: 3 },
     { title: "rimThickness", type: "range", min: 1, max: 20, value: 2 }
 ];
-module.exports = stackbox;
+module.exports = Rimbox;

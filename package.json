@@ -1,5 +1,5 @@
 {
-  "name": "stackbox",
+  "name": "makerjs-rimbox",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/danmarshall/stackbox.git"
+    "url": "https://github.com/danmarshall/makerjs-rimbox.git"
   },
   "keywords": [
     "makerjs"
@@ -17,9 +17,9 @@
   "author": "Dan Marshall",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/danmarshall/stackbox/issues"
+    "url": "https://github.com/danmarshall/makerjs-rimbox/issues"
   },
-  "homepage": "https://github.com/danmarshall/stackbox",
+  "homepage": "https://github.com/danmarshall/makerjs-rimbox",
   "dependencies": {
     "makerjs": "^0.3.3",
     "tsd": "^0.6.3"

@@ -2,7 +2,7 @@
 
 var makerjs: typeof MakerJs = require('makerjs');
 
-class stackboxCorner implements MakerJs.IModel {
+class RimboxCorner implements MakerJs.IModel {
 	public paths: MakerJs.IPathMap;
 	
 	constructor(holeRadius: number, rimThickness: number) {
@@ -17,13 +17,13 @@ class stackboxCorner implements MakerJs.IModel {
 	}	
 }
 
-class stackboxInner implements MakerJs.IModel {
+class RimboxInner implements MakerJs.IModel {
 	public models: MakerJs.IModelMap;
 	public paths: MakerJs.IPathMap;
 	
 	constructor(width: number, height: number, holeRadius: number, rimThickness: number) {
 		var mm = makerjs.model;
-		var corner = new stackboxCorner(holeRadius, rimThickness);
+		var corner = new RimboxCorner(holeRadius, rimThickness);
 
 		this.models = {
 			bottomLeft: corner,
@@ -45,12 +45,12 @@ class stackboxInner implements MakerJs.IModel {
 	}
 }
 
-class stackbox implements MakerJs.IModel {
+class Rimbox implements MakerJs.IModel {
 	public models: MakerJs.IModelMap;
 	
 	constructor(width: number, height: number, holeRadius: number, rimThickness: number) {
 		if (arguments.length == 0) {
-			var defaultValues = makerjs.kit.getParameterValues(stackbox);
+			var defaultValues = makerjs.kit.getParameterValues(Rimbox);
 			width = defaultValues.shift();
 			height = defaultValues.shift();
 			holeRadius = defaultValues.shift();
@@ -64,14 +64,14 @@ class stackbox implements MakerJs.IModel {
 		this.models = {
 			bolts: new mm.BoltRectangle(width, height, holeRadius),
 			outer: new mm.RoundRectangle(width + c2, height + c2, cornerRadius),
-			inner: new stackboxInner(width, height, holeRadius, rimThickness)
+			inner: new RimboxInner(width, height, holeRadius, rimThickness)
 		};
 		
 		this.models['outer'].origin = [-cornerRadius, -cornerRadius];
 	}	
 }
 
-(<MakerJs.kit.IKit>stackbox).metaParameters = [
+(<MakerJs.kit.IKit>Rimbox).metaParameters = [
     { title: "width", type: "range", min: 10, max: 500, value: 120 },
 	{ title: "height", type: "range", min: 10, max: 500, value: 100 },
 	{ title: "holeRadius", type: "range", min: 1, max: 20, value: 3 },
@@ -79,4 +79,4 @@ class stackbox implements MakerJs.IModel {
 ];
 
 
-export = stackbox;
+export = Rimbox;
