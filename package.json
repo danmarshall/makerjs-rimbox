@@ -1,6 +1,6 @@
 {
   "name": "makerjs-rimbox",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A parametric round cornered hollow box with bolt holes. For Maker.js",
   "main": "index.js",
   "scripts": {
